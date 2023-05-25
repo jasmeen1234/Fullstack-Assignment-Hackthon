@@ -1,77 +1,81 @@
 
-const { MongoClient } = require('mongodb');
+// / dataGeneration.js
 
-const stations = [
-    'Station A',
-    'Station B',
-    'Station C',
-    'Station D',
-    'Station E',
-    // Add more stations as needed
-];
+const mongoose = require('mongoose');
+const Train = require('./trains');
 
-const totalTrains = 1000;
-const dbUrl = 'mongodb://localhost:27017'; // Replace with your MongoDB connection URL
-const dbName = 'train_search'; // Replace with your database name
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/train_search_app', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => {
+        console.log('Connected to MongoDB');
+        generateTestData();
+    })
+    .catch((error) => {
+        console.error('Error connecting to MongoDB:', error);
+    });
 
-// Helper function to generate a random number within a range
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-async function populateDatabase() {
+// Generate random train data
+async function generateTestData() {
     try {
-        const client = await MongoClient.connect(dbUrl);
-        const db = client.db(dbName);
-        const trainsCollection = db.collection('trains');
-
+        const stations = ['Chennai', 'Vellore', 'Bangalore', 'Mysuru', 'Mangalore', 'Shimoga', 'Delhi', 'Kolkata'];
         const trains = [];
 
-        // Generate 1000 trains and their routes
-        for (let i = 1; i <= totalTrains; i++) {
-            const train = {
-                name: `Train ${i}`,
-                route: [],
-                distance: 0,
-                
-            };
+        // Generate 1000 random trains
+        for (let i = 1; i <= 1000; i++) {
+            const trainName = `Train ${i}`;
+            const numStops = Math.floor(Math.random() * 6) + 1; // Random number of stops (1 to 6)
+            const stops = [];
 
-            const numStations = getRandomNumber(2, 5); // Randomly choose the number of stations in a route
-            let prevStation = null;
+            let distance = 0;
+            let departureTime = randomTime();
+            let arrivalTime = randomTime();
 
-            // Generate a route for the train
-            for (let j = 0; j < numStations; j++) {
-                let station;
-                do {
-                    station = stations[getRandomNumber(0, stations.length - 1)]; // Randomly choose a station
-                } while (station === prevStation); // Ensure the current station is not the same as the previous station
+            for (let j = 0; j < numStops; j++) {
+                const stop = {
+                    name: stations[Math.floor(Math.random() * stations.length)], // Random station
+                    distance: distance,
+                    departureTime: departureTime,
+                    arrivalTime: arrivalTime,
+                };
 
-                train.route.push(station);
-                prevStation = station;
+                stops.push(stop);
 
-                if (j > 0) {
-                    // Calculate the distance between consecutive stations
-                    const distance = getRandomNumber(50, 200); // Assuming distance is in kilometers
-                    train.distance += distance;
-                }
+                distance += Math.floor(Math.random() * 150) + 50; // Random distance (50 to 200 km)
+                departureTime = randomTime(); // Random departure time
             }
 
-            // Calculate ticket price based on distance
-            train.price = train.distance * 1.25; // Rs 1.25 per kilometer
+            const train = {
+                name: trainName,
+                stops: stops,
+            };
 
             trains.push(train);
         }
 
-        // Insert the generated trains into the database
-        await trainsCollection.insertMany(trains);
-        console.log('Train data inserted into the database.');
+        // await Train.deleteMany(); // Clear existing data
 
-        client.close();
+        // Insert test data
+        await Train.insertMany(trains);
+
+        console.log('Test data generated successfully');
+        process.exit(); // Terminate the script
     } catch (error) {
-        console.error('Error while populating the database:', error);
+        console.error('Error generating test data:', error);
+        process.exit(1); // Terminate the script with an error
     }
 }
 
-populateDatabase();
+// Generate random time in HH:MM format
+function randomTime() {
+    const hours = Math.floor(Math.random() * 24);
+    const minutes = Math.floor(Math.random() * 60);
+    return `${padZero(hours)}:${padZero(minutes)}`;
+}
 
-
+// Pad a number with leading zero if necessary
+function padZero(number) {
+    return number.toString().padStart(2, '0');
+}

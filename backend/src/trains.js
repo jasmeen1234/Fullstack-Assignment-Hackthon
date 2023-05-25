@@ -1,15 +1,19 @@
-const { ObjectId } = require('mongodb');
+// train.js (model file)
 
-class Train {
-    constructor(name, route, distance,departure ,arrival) {
-        this._id = new ObjectId();
-        this.name = name;
-        this.route = route;
-        this.distance = distance;
-        this.price = distance * 1.25;
-         // Calculate the ticket price based on distance
-         this.arrival=   
-    }
-}
+const mongoose = require('mongoose');
+
+const trainSchema = new mongoose.Schema({
+    name: String,
+    stops: [
+        {
+            name: String,
+            distance: Number,
+            departureTime: String,
+            arrivalTime: String,
+        }
+    ],
+});
+
+const Train = mongoose.model('Train', trainSchema);
 
 module.exports = Train;
