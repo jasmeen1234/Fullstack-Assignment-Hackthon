@@ -1,0 +1,107 @@
+
+.main-container{
+    padding: 0px 30px;
+    margin: 0px 0px 5px;
+    background-color:yellow;
+    text-align: right;
+    
+   
+}
+.booking{
+    background-color: #fff;
+    height: 100%;
+    padding:0;
+    text-align: left;
+
+}
+.booking-ticket{
+margin-bottom: 12px;
+text-align: center;
+
+}
+.col-12{
+    width: 100%;
+    float: left;
+    background-color: white;
+}
+.heading-font{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: 30px;
+    color:#2f4676
+
+}
+.heading-font{
+    text-align: center;
+}
+.img-left{
+    height: 90px;
+    margin: 0px 0px 25px 30px;
+}
+.pull-right{
+    float: right;
+}
+.h-logo{
+    margin-top: 8px;
+    height: 70px;
+    display: block;
+
+}
+.header-logo{
+    width : 40px;
+    height: 40px;
+}
+.apni-yatra{
+    color: #ef2d2d;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+}
+.header-fix{
+    height: 50px;
+    display: flex;
+    width: 100%;
+    /* align-items: center; */
+    background-color:gainsboro;
+    /* position: sticky; */
+    /* position: fixed; */
+    top: 0;
+    z-index: 100;
+    padding: 0 20px;
+    /* justify-content: center; */
+
+}
+.LinkLagaya{
+    text-decoration: none !important;
+}
+.iconlagaya{
+    color: #9e2f2f;
+    display: flex;
+}
+.header_searchbox{
+    border-radius: 5px 0 0 5px;
+    height:30px;
+    /* width:50px; */
+}
+.header_search input{
+    width: 75%;
+    /* flex: 1; */
+    height: 30px;
+    padding:  8px 20px;
+    border: 0;
+    outline: none;
+    border-radius: 2px 0px 0px 2px;
+    font-size: 14px;
+}
+.header_searchIcon{
+    width: 50%;
+    height: 50%;
+    outline: none;
+    border: none;
+    background: #333;
+    color: #fff;
+    font-size: 14px;
+    /* align-items: center; */
+    border-radius: 5px ;
+}

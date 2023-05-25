@@ -1,0 +1,13 @@
+.home{
+    background: url("https://www.irctc.co.in/nget/home_page_banner1.e6749c3d9698d1ac7608.jpg");
+    height: 95vh;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+/* background-size: calc(); */
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
